@@ -4,8 +4,10 @@ dayjs.extend(isSameOrAfter)
 var isSameOrBefore = require('dayjs/plugin/isSameOrBefore')
 dayjs.extend(isSameOrBefore)
 const express = require('express')
+const cors = require('cors')
 
 const app = express()
+app.use(cors())
 const PORT = 8080
 
 app.use(express.json())
@@ -123,4 +125,4 @@ app.get(`${API_V1}orders`, async (req, res) => {
   }
 })
 
-app.listen(PORT, () => console.log(`Running on https://localhost:${PORT}`))
+app.listen(PORT)
