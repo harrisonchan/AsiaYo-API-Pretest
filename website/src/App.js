@@ -65,8 +65,16 @@ const App = () => {
           onClick={() => {
             if (searchWithoutDate) {
               fetchData()
-            } else if (searchDateParams.endDate.isSameOrAfter(searchDateParams.startDate)) {
+            } else if (
+              !isNaN(searchDateParams.startDate) &&
+              !isNaN(searchDateParams.endDate) &&
+              searchDateParams.endDate.isSameOrAfter(searchDateParams.startDate)
+            ) {
               fetchData()
+            } else {
+              alert(
+                'Invalid search. Either search without dates or select valid dates to search from. Start date must be before end date!'
+              )
             }
           }}>
           Search
