@@ -11,18 +11,29 @@ const App = () => {
   const [searchDateParams, setSearchDateParams] = useState({ startDate: undefined, endDate: undefined })
   const [searchWithoutDate, setSearchWithoutDate] = useState(false)
   const fetchData = async () => {
+    console.log(
+      searchWithoutDate
+        ? `${URL}/orders`
+        : `${URL}/orders?startDate=${dayjs(searchDateParams.startDate).format('YYYY-MM-DD')}&endDate=${dayjs(
+            searchDateParams.endDate
+          ).format('YYYY-MM-DD')}`
+    )
     fetch(
       searchWithoutDate
         ? `${URL}/orders`
-        : `${URL}/orders?startDate=${searchDateParams.startDate}&endDate=${searchDateParams.endDate}`
+        : `${URL}/orders?startDate=${dayjs(searchDateParams.startDate).format('YYYY-MM-DD')}&endDate=${dayjs(
+            searchDateParams.endDate
+          ).format('YYYY-MM-DD')}`
     )
       .then((res) => {
         if (res.ok) {
+          console.log(res)
           return res.json()
         }
         throw res
       })
       .then((orders) => {
+        console.log(orders)
         setOrders(orders)
       })
       .catch((err) => console.log(err))
@@ -97,10 +108,10 @@ const App = () => {
             return (
               <tr key={item.toString() + index.toString()}>
                 <td>{item.id}</td>
-                <td>{item.property.name}</td>
-                <td>{item.room.name}</td>
+                <td>{item.propertyName}</td>
+                <td>{item.roomName}</td>
                 <td>$ {item.price}</td>
-                <td>{item.created_at}</td>
+                <td>{item.createdAt}</td>
               </tr>
             )
           })}
