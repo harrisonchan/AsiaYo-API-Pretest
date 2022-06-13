@@ -11,13 +11,6 @@ const App = () => {
   const [searchDateParams, setSearchDateParams] = useState({ startDate: undefined, endDate: undefined })
   const [searchWithoutDate, setSearchWithoutDate] = useState(false)
   const fetchData = async () => {
-    console.log(
-      searchWithoutDate
-        ? `${URL}/orders`
-        : `${URL}/orders?startDate=${dayjs(searchDateParams.startDate).format('YYYY-MM-DD')}&endDate=${dayjs(
-            searchDateParams.endDate
-          ).format('YYYY-MM-DD')}`
-    )
     fetch(
       searchWithoutDate
         ? `${URL}/orders`
@@ -27,13 +20,11 @@ const App = () => {
     )
       .then((res) => {
         if (res.ok) {
-          console.log(res)
           return res.json()
         }
         throw res
       })
       .then((orders) => {
-        console.log(orders)
         setOrders(orders)
       })
       .catch((err) => console.log(err))
